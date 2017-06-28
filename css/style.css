@@ -6402,7 +6402,8 @@ abbr.required {
   border-width:1px;
   background-color: transparent;
   color: #191b1f;
-  padding:3px;
+  padding:8px 18px;
+  font-size:20px;
 }
 
 .rounded {
