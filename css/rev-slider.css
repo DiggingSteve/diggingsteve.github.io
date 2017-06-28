@@ -1,0 +1,138 @@
+@import url(../revolution/css/navigation.css);
+@import url(../revolution/css/layers.css);
+
+iframe {border: 0;}
+
+/* Bullets
+-------------------------------------------------------*/
+.tp-bullet {
+  background-color: #fff;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  width: 24px !important;
+  height: 2px !important;
+  display: inline-block;
+  -webkit-transition: background-color 0.2s, border-color 0.2s;
+  -moz-transition: background-color 0.2s, border-color 0.2s;
+  -o-transition: background-color 0.2s, border-color 0.2s;
+  -ms-transition: background-color 0.2s, border-color 0.2s;
+  transition: background-color 0.2s, border-color 0.2s;
+  float:none !important;
+}
+
+.tp-bullet.selected,
+.tp-bullet:hover {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background-color: #e7604a;
+  width: 24px !important;
+  height: 2px !important;
+}
+
+
+/* Arrows
+-------------------------------------------------------*/
+
+.custom.tparrows,
+.custom.tparrows:hover {
+  background-color: transparent;
+}
+
+.custom.tparrows:before {
+  font-family: "Themify";
+  font-size: 30px;
+}
+
+.custom.tparrows.tp-leftarrow:before {
+  content: '\e629';
+}
+
+.custom.tparrows.tp-rightarrow:before {
+  content: '\e628';
+}
+
+
+/*-------------------------------------------------------*/
+/* Onepage
+/*-------------------------------------------------------*/
+
+.tp-caption.hero-text {
+  color: #fff;
+  text-shadow: none;
+  font-weight: 100;
+  line-height: 60px;
+  font-family: "Roboto", sans-serif;
+  margin: 0px;
+  border-width: 0px;
+  border-style: none;
+  white-space: nowrap;
+}
+
+.tp-caption.uppercase {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.tp-caption.medium-text {
+  color: #fff;
+  font-size: 22px;
+  line-height: 28px;
+  font-family: "Open Sans", sans-serif;
+  margin: 0px;
+  border-width: 0px;
+  border-style: none;
+  white-space: nowrap;
+}
+
+.tp-caption.alt-font {
+  font-family: "Merriweather", serif;
+}
+
+.tp-caption.medium-text.alt-font {
+  font-style: italic;
+}
+
+.tp-caption.hero-text.style-2 {
+  font-size: 64px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+}
+
+.tp-caption.size-120 { font-size: 120px; }
+.tp-caption.size-70 { font-size: 70px; }
+.tp-caption.size-64 { font-size: 64px; }
+.tp-caption.size-60 { font-size: 60px; }
+
+.tp-caption.nocaps {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.tp-caption.dark { color: #121212; }
+.tp-caption.grey { color: #7a7a7a; }
+
+.tp-caption.small-text {
+  color: #fff;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: "Open sans", sans-serif;
+  margin: 0px;
+  border-width: 0px;
+  border-style: none;
+  white-space: nowrap;
+  text-shadow: none;
+}
+
+.tp-caption.hero-line {
+  content: "";
+  border-bottom: 3px solid #fff;
+  width: 55px;
+}
+
+.tp-caption a,
+.tp-caption a:hover {
+  color: #fff;
+}
