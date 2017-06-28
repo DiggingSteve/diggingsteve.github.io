@@ -5653,12 +5653,24 @@ abbr.required {
 .service-item-box.style-1.violet {
   border-color: #7b33d4;
 }
+
 .service-item-box.style-1.violet i {
   color: #7b33d4;
 }
 .service-item-box.style-1.violet .read-more {
   color: #7b33d4;
 }
+    .service-item-box.style-1.channel {
+        border-color: #4ba4fd;
+    }
+
+        .service-item-box.style-1.channel i {
+            color: #4ba4fd;
+        }
+
+        .service-item-box.style-1.channel .read-more {
+            color: #4ba4fd;
+        }
 .service-item-box.style-2 i {
   width: 70px;
   height: 70px;
@@ -6328,7 +6340,7 @@ abbr.required {
   left: -14px;
 }
 .btn.btn-md.btn-icon:hover span {
-  left: -10px;
+  left: -2px;
 }
 .btn.btn-sm.btn-icon:hover span {
   left: -7px;
@@ -6387,8 +6399,10 @@ abbr.required {
 
 .btn.btn-stroke {
   border-color: #e8ebee;
+  border-width:1px;
   background-color: transparent;
   color: #191b1f;
+  padding:3px;
 }
 
 .rounded {
