@@ -16,11 +16,17 @@
 }
 
 .coo_logo_wrap .logo_text {
-    font-size: 18px;
+    font-size: 16px;
     margin-left: 5px;
     color: rgba(124, 125, 121, 0.95);
 }
 
+@media(max-width:340px){
+    .coo_logo_wrap .logo_text {
+        font-size: 13px;
+       
+    }
+}
 @media (min-width: 768px) {
     .coo_logo_wrap .coo_logo {
         font-size: 35PX;
