@@ -963,3 +963,10 @@ function container_full_height_init(){
     $(".container-full-height").height($(window).height());
   })(jQuery);
 }
+
+(function ($) {
+
+    $(".span_contact_us").click(function () {
+        $("#nav-icon").trigger("click");
+    }); 
+})(jQuery)

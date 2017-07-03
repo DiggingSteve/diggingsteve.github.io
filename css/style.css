@@ -152,16 +152,16 @@ a {
   -o-transition: color 0.1s ease-in-out;
   transition: color 0.1s ease-in-out;
 }
-a:hover {
-  text-decoration: none;
-  color: #191b1f;
-  outline: none;
-}
-a:focus {
-  color: #e7604a;
-  text-decoration: none;
-  outline: none;
-}
+    a:hover {
+        text-decoration: none;
+        color: #e7604a;
+        outline: none;
+    }
+    a:focus {
+        color: #e7604a;
+        text-decoration: none;
+        outline: none;
+    }
 
 :focus {
   outline: none;
@@ -1000,12 +1000,29 @@ ol.numbers {
   display: table;
   width: 100%;
 }
-.logo-wrap > a {
-  display: table-cell;
-  vertical-align: middle;
-  height: 100px;
-  font-size:22px;
+@media(min-width:768px){
+    .logo-wrap > a {
+        display: table-cell;
+        vertical-align: middle;
+        height: 100px;
+        font-size: 22px;
+        border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border: solid 1px;
+        padding: 0 6px;
+    }
 }
+.logo-wrap > a {
+    display: table-cell;
+    vertical-align: middle;
+    height: 100px;
+    font-size: 22px;
+
+    padding: 0 6px;
+}
+   
 .logo-wrap.shrink > a {
   height: 60px;
 }
@@ -2275,7 +2292,7 @@ header.transparent #nav-icon span {
   max-width: 1400px;
 }
 .intro.style-4 .row > div:first-child {
-  padding-right: 80px;
+
 }
 
 .intro-heading {
@@ -7179,3 +7196,10 @@ input[type="email"].newsletter-input:focus {
     display: none;
   }
 }
+
+.span_contact_us {
+    font-size: 22px;
+    cursor: pointer;
+    color: #ffa24f;
+}
+.span_price {font-size:25px;margin-right:5px;}
