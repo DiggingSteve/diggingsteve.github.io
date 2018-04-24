@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
+
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #viewer {
+            height: 100%;
+            width: 100%;
+            background: #ddd;
+
+        }
+
+        #header {
+            height: 50px;
+            background: #000;
+        }
+
+        .swiper-container {
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            list-style: none;
+            padding: 0;
+            z-index: 1;
+            height: 100%;
+            width: 100%;
+        }
+
+        .swiper-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-transition-property: -webkit-transform;
+            transition-property: -webkit-transform;
+            -o-transition-property: transform;
+            transition-property: transform;
+            transition-property: transform, -webkit-transform;
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+
+        }
+
+
+
+        .swiper-slide {
+            -webkit-flex-shrink: 0;
+            -ms-flex-negative: 0;
+            flex-shrink: 0;
+            /* 属性指定了 flex 元素的收缩规则。flex 元素仅在默认宽度
+            之和大于容器的时候才会发生收缩，其收缩的大小是依据 flex-shrink 的值。默认是1*/
+            width: 100%;
+            height: 100%;
+            position: relative;
+            -webkit-transition-property: -webkit-transform;
+            transition-property: -webkit-transform;
+            -o-transition-property: transform;
+            transition-property: transform;
+            transition-property: transform, -webkit-transform;
+            border: 1px solid #000;
+        }
+    </style>
+    <script src="jquery1.11.1.min.js"></script>
+</head>
+
+<body>
+    <div id="viewer">
+        <div id="header">
+
+        </div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" style="background: darkcyan"></div>
+                <div class="swiper-slide" style="background: darkgreen"></div>
+                <div class="swiper-slide" style="background: darkkhaki"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    function IsPC() {
+        var userAgentInfo = navigator.userAgent;
+        var Agents = ["Android", "iPhone",
+            "SymbianOS", "Windows Phone",
+            "iPad", "iPod"];
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }
+    var Swiper = (function () {
+        var Swiper;
+        function swiper() {
+            this.width = 0;
+            this.wrapper = $(".swiper-wrapper");
+            this.touchFlag = false;
+            this.activePointX = 0;
+            this.direction = "right";
+            this.isEdge = false;
+            this.currentSlideIndex = 0;
+            this.slideCount = 0;
+            this.currentTransform = 0;
+            this.init();
+        }
+        Swiper = swiper;
+        swiper.prototype.init = function () {
+            this.width = $(".swiper-wrapper").width();
+            this.setEverySlide(this.width);
+            this.setEvent();
+        }
+        swiper.prototype.setEverySlide = function (width) {
+            var _this = this;
+            $(".swiper-slide").each(function (i, v) {
+                $(v).width(width);
+                _this.slideCount++;
+            });
+        }
+
+        swiper.prototype.setEvent = function () {
+            var isPc = IsPC();
+            if (isPc) {
+                this.setPcEvent();
+            }
+            else {
+this.setTouchEvent();
+            }
+        }
+        swiper.prototype.judgeIsEdge = function (direction) {
+
+            if (direction == "--") {
+                this.currentSlideIndex--;
+                if (this.currentSlideIndex >= 0) {
+                    this.moveTo(-this.currentSlideIndex);
+                   
+                }
+                else {
+                    this.currentSlideIndex++;
+                 
+                }
+            }
+            if (direction == "++") {
+                this.currentSlideIndex++;
+                if (this.currentSlideIndex <= (this.slideCount - 1)) {
+                    this.moveTo(-this.currentSlideIndex);
+                  
+                }
+                else {
+                    this.currentSlideIndex--;
+                  
+                }
+            }
+            console.log(direction);
+            console.log(this.currentSlideIndex);
+        }
+        swiper.prototype.setPcEvent = function () {
+            var _this = this;
+            this.wrapper.on("mousedown", function (e) {
+                _this.touchFlag = true;
+                _this.activePointX = e.clientX;
+                _this.wrapper.css("transition", "");
+
+            });
+            this.wrapper.on("mouseup", function (e) {
+                _this.touchFlag = false;
+                var moveWidth = e.clientX - _this.activePointX;
+                if (moveWidth > 0) { _this.direction = "--" }
+                else { _this.direction = "++" }
+
+                _this.judgeIsEdge(_this.direction);
+                _this.wrapper.css("transition", "all .5s");
+
+            });
+            this.wrapper.on("mousemove", function (e) {
+
+                if (_this.touchFlag) {
+                    var moveWidth = _this.currentTransform + e.clientX - _this.activePointX;
+
+                    $(this).css("transform", "translate3d(" + moveWidth + "px, 0px, 0px)");
+
+                }
+
+            });
+        }
+
+                swiper.prototype.setTouchEvent = function () {
+            var _this = this;
+            this.wrapper.on("touchstart", function (e) {
+                var touch = e.originalEvent.targetTouches[0]; 
+                _this.touchFlag = true;
+                _this.activePointX = touch.pageX;
+                _this.wrapper.css("transition", "");
+             
+
+            });
+            this.wrapper.on("touchend", function (e) {
+                var touch = e.originalEvent.changedTouches[0]; 
+                _this.touchFlag = false;
+                var moveWidth = touch.pageX - _this.activePointX;
+                if (moveWidth > 0) { _this.direction = "--" }
+                else { _this.direction = "++" }
+
+                _this.judgeIsEdge(_this.direction);
+                _this.wrapper.css("transition", "all .5s");
+
+            });
+            this.wrapper.on("touchmove", function (e) {
+                var touch = e.originalEvent.targetTouches[0]; 
+                
+                if (_this.touchFlag) {
+                    var moveWidth = _this.currentTransform + touch.pageX - _this.activePointX;
+
+                    $(this).css("transform", "translate3d(" + moveWidth + "px, 0px, 0px)");
+
+                }
+
+            });
+        }
+
+
+        swiper.prototype.moveTo = function (index) {
+            this.wrapper.css("transform", "translate3d(" + index * this.width + "px, 0px, 0px)");
+            this.currentTransform = index * this.width;
+        }
+
+        return Swiper;
+    })()
+    new Swiper();
+</script>
