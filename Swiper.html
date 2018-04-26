@@ -23,6 +23,8 @@
             overflow: hidden;
         }
 
+  
+
         #viewer {
             height: 100%;
             width: 100%;
@@ -35,12 +37,22 @@
             background: #000;
         }
 
+        .center {
+            
+            position: absolute;
+            /* left: 50%; */
+            width: 100%;
+            height: 800px;
+            /* margin: 0 auto;
+            transform: translate(-500px, 0); */
+
+        }
+
         .swiper-container {
             margin: 0 auto;
             position: relative;
             overflow: hidden;
             list-style: none;
-            padding: 0;
             z-index: 1;
             height: 100%;
             width: 100%;
@@ -60,8 +72,8 @@
             -o-transition-property: transform;
             transition-property: transform;
             transition-property: transform, -webkit-transform;
-            -webkit-box-sizing: content-box;
-            box-sizing: content-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
 
         }
 
@@ -81,7 +93,7 @@
             -o-transition-property: transform;
             transition-property: transform;
             transition-property: transform, -webkit-transform;
-            border: 1px solid #000;
+            
         }
     </style>
     <script src="jquery1.11.1.min.js"></script>
@@ -92,11 +104,13 @@
         <div id="header">
 
         </div>
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide" style="background: darkcyan"></div>
-                <div class="swiper-slide" style="background: darkgreen"></div>
-                <div class="swiper-slide" style="background: darkkhaki"></div>
+        <div class="center">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" style="background: darkcyan"></div>
+                    <div class="swiper-slide" style="background: darkgreen"></div>
+                    <div class="swiper-slide" style="background: darkkhaki"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -126,8 +140,10 @@
             this.touchFlag = false;
             this.activePointX = 0;
             this.direction = "right";
-            this.isEdge = false;
+            this.isEdge = true;
             this.currentSlideIndex = 0;
+            this.minTransformWidth=0;
+            this.maxTransformWidth=0;
             this.slideCount = 0;
             this.currentTransform = 0;
             this.init();
@@ -144,6 +160,7 @@
                 $(v).width(width);
                 _this.slideCount++;
             });
+            this.maxTransformWidth=(this.slideCount-1)*width;
         }
 
         swiper.prototype.setEvent = function () {
@@ -152,35 +169,32 @@
                 this.setPcEvent();
             }
             else {
-this.setTouchEvent();
+                this.setTouchEvent();
             }
         }
-        swiper.prototype.judgeIsEdge = function (direction) {
 
-            if (direction == "--") {
+        swiper.prototype.changeEdge=function(direction){
+            if(direction=="--"&&this.currentSlideIndex==0){
+                this.isEdge=true;
+            }
+            else if(direction=="++"&&this.currentSlideIndex==this.slideCount-1){
+                this.isEdge=true;
+            }
+            else{
+                this.isEdge=false;
+            }
+        }
+        swiper.prototype.activeMove = function (direction) {
+
+            if (direction == "--"&&this.isEdge==false) {
                 this.currentSlideIndex--;
-                if (this.currentSlideIndex >= 0) {
-                    this.moveTo(-this.currentSlideIndex);
-                   
-                }
-                else {
-                    this.currentSlideIndex++;
-                 
-                }
+                this.moveTo(-this.currentSlideIndex);
             }
-            if (direction == "++") {
+            if (direction == "++"&&this.isEdge==false) {
                 this.currentSlideIndex++;
-                if (this.currentSlideIndex <= (this.slideCount - 1)) {
-                    this.moveTo(-this.currentSlideIndex);
-                  
-                }
-                else {
-                    this.currentSlideIndex--;
-                  
-                }
+                this.moveTo(-this.currentSlideIndex);
             }
-            console.log(direction);
-            console.log(this.currentSlideIndex);
+  
         }
         swiper.prototype.setPcEvent = function () {
             var _this = this;
@@ -195,35 +209,34 @@ this.setTouchEvent();
                 var moveWidth = e.clientX - _this.activePointX;
                 if (moveWidth > 0) { _this.direction = "--" }
                 else { _this.direction = "++" }
-
-                _this.judgeIsEdge(_this.direction);
+                _this.changeEdge(_this.direction);
+                _this.activeMove(_this.direction);
                 _this.wrapper.css("transition", "all .5s");
 
             });
             this.wrapper.on("mousemove", function (e) {
-
                 if (_this.touchFlag) {
                     var moveWidth = _this.currentTransform + e.clientX - _this.activePointX;
-
+                    if(moveWidth>=_this.minTransformWidth||moveWidth<=-_this.maxTransformWidth){_this.isEdge=true;return;}
+                    _this.isEdge=false;
                     $(this).css("transform", "translate3d(" + moveWidth + "px, 0px, 0px)");
-
                 }
 
             });
         }
 
-                swiper.prototype.setTouchEvent = function () {
+        swiper.prototype.setTouchEvent = function () {
             var _this = this;
             this.wrapper.on("touchstart", function (e) {
-                var touch = e.originalEvent.targetTouches[0]; 
+                var touch = e.originalEvent.targetTouches[0];
                 _this.touchFlag = true;
                 _this.activePointX = touch.pageX;
                 _this.wrapper.css("transition", "");
-             
+
 
             });
             this.wrapper.on("touchend", function (e) {
-                var touch = e.originalEvent.changedTouches[0]; 
+                var touch = e.originalEvent.changedTouches[0];
                 _this.touchFlag = false;
                 var moveWidth = touch.pageX - _this.activePointX;
                 if (moveWidth > 0) { _this.direction = "--" }
@@ -234,13 +247,15 @@ this.setTouchEvent();
 
             });
             this.wrapper.on("touchmove", function (e) {
-                var touch = e.originalEvent.targetTouches[0]; 
-                
+                var touch = e.originalEvent.targetTouches[0];
+
                 if (_this.touchFlag) {
-                    var moveWidth = _this.currentTransform + touch.pageX - _this.activePointX;
-
-                    $(this).css("transform", "translate3d(" + moveWidth + "px, 0px, 0px)");
-
+                    var moveWidth= touch.pageX - _this.activePointX;
+                    console.log(moveWidth);
+                    var transformWidth = _this.currentTransform + moveWidth;
+                    if(moveWidth>0&&!_this.isEdge){
+                    $(this).css("transform", "translate3d(" + transformWidth + "px, 0px, 0px)");
+                }
                 }
 
             });
