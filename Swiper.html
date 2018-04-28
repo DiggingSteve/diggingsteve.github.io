@@ -237,25 +237,24 @@
             });
             this.wrapper.on("touchend", function (e) {
                 var touch = e.originalEvent.changedTouches[0];
-                _this.touchFlag = false;
+          
                 var moveWidth = touch.pageX - _this.activePointX;
                 if (moveWidth > 0) { _this.direction = "--" }
                 else { _this.direction = "++" }
-
-                _this.judgeIsEdge(_this.direction);
+                _this.changeEdge(_this.direction);
+                _this.activeMove(_this.direction);
                 _this.wrapper.css("transition", "all .5s");
+       
 
             });
             this.wrapper.on("touchmove", function (e) {
                 var touch = e.originalEvent.targetTouches[0];
 
                 if (_this.touchFlag) {
-                    var moveWidth= touch.pageX - _this.activePointX;
-                    console.log(moveWidth);
-                    var transformWidth = _this.currentTransform + moveWidth;
-                    if(moveWidth>0&&!_this.isEdge){
-                    $(this).css("transform", "translate3d(" + transformWidth + "px, 0px, 0px)");
-                }
+                    var moveWidth = _this.currentTransform + touch.pageX - _this.activePointX;
+                    if(moveWidth>=_this.minTransformWidth||moveWidth<=-_this.maxTransformWidth){_this.isEdge=true;return;}
+                    _this.isEdge=false;
+                    $(this).css("transform", "translate3d(" + moveWidth + "px, 0px, 0px)");
                 }
 
             });
