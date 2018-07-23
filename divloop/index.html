@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="icon/iconfont.css">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100%;
+            top: 0;
+            bottom: 0;
+            position: absolute;
+            width: 100%;
+        }
+
+        .clearfix:after {
+            content: " ";
+            display: block;
+            clear: both;
+            height: 0;
+        }
+
+        .clearfix {
+            zoom: 1;
+        }
+
+        .father {
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .child {
+            width: 100%;
+            height: 100%;
+          position: relative;
+        }
+        .container{
+            position: absolute;
+            width:100%;
+            height: 100%;
+            top:20px;
+            background: #8a8585;
+        }
+
+        .btnHorizontal {
+            position: absolute;
+            transition: all .5s;
+            cursor: pointer;
+            top: 10px;
+            right: 30px;
+            
+        }
+        .btnHorizontal:hover{
+            transform: scale(1.4);
+        }
+        .btnVertical:hover{
+            transform: scale(1.4);
+        }
+        .btnVertical {
+            position: absolute;
+            transition: all .5s;
+            cursor: pointer;
+            top: 10px;
+            right: 50px;
+            
+        }
+
+        .btnCancel{
+            position: absolute;
+            transition: all .5s;
+            cursor: pointer;
+            opacity: 0;
+            top: 10px;
+            right:10px;
+        }
+        .btnCancel:hover{
+            transform: scale(1.4);
+        }
+        .cross{
+            cursor:crosshair;
+        }
+        .border-v{position: absolute; z-index: 999; right: 0; cursor:w-resize;height: 100%;width: 3px;background: #000;transition: all .5s;}
+        .border-v:hover{
+            background: #af2b2b;
+        }
+        .border-h:hover{
+            background: #ee05a0;
+        }
+        .border-h{position:absolute; z-index: 998; bottom: 0; cursor:n-resize;width: 100%;height:3px;background: #000;transition: all .5s;}
+    </style>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script src="dist/main.js"></script>
+<script src="test.js"></script>
